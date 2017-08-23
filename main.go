@@ -12,17 +12,39 @@ import (
 	"unsafe"
 )
 
-//export go_callback
-func go_callback(userData unsafe.Pointer, flags C.unsigned, dest *C.cups_dest_t) {
-	name := C.GoString(dest.name)
-	fmt.Println(name)
+var listPrintersChan chan *Printer
+
+//export listPrinters_go_callback
+func listPrinters_go_callback(userData unsafe.Pointer, flags C.unsigned, dest *C.cups_dest_t) C.int {
+
+	printer := &Printer{
+		Name:      C.GoString(dest.name),
+		IsDefault: !(int(dest.is_default) == 0),
+	}
+
+	listPrintersChan <- printer
+
+	return C.int(1)
 }
 
 func main() {
+	printers := GetPrinters()
+	fmt.Println(printers)
+}
 
+// GetPrinters returns a list of Printers
+func GetPrinters() []*Printer {
+	numPrinters := C.numDests()
+
+	listPrintersChan = make(chan *Printer, int(numPrinters))
 	C.listPrinters()
-	C.listPrinters()
+	close(listPrintersChan)
 
-	select {}
+	printers := []*Printer{}
 
+	for message := range listPrintersChan {
+		printers = append(printers, message)
+	}
+
+	return printers
 }
