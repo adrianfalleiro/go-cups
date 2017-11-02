@@ -14,3 +14,23 @@ Currently only working on OS X and printing test pages.
 go get https://github.com/adrianfalleiro/go-cups
 ```
 
+## Example
+
+```go
+package main
+
+import (
+    "fmt"
+
+    cups "github.com/adrianfalleiro/go-cups"
+)
+
+func main() {
+    printers := cups.NewDefaultConnection()
+    printers.Refresh()
+    for _, dest := range printers.Dests {
+        fmt.Printf("%v (%v)\n", dest.Name, dest.Status())
+    }
+
+}
+```
