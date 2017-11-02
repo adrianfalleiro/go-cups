@@ -17,6 +17,9 @@ type Connection struct {
 	Dests     []*Dest
 }
 
+// Is there a better way to do this?
+// I manually calculated the size in C
+//
 const cupsDestTSize = 32
 const cupsOptionTSize = 16
 
@@ -29,6 +32,7 @@ func (c *Connection) Refresh() {
 
 // NewDefaultConnection creates a new default CUPS connection
 func NewDefaultConnection() *Connection {
+
 	connection := &Connection{
 		isDefault: true,
 	}
@@ -47,6 +51,7 @@ func updateDefaultConnection(c *Connection) {
 
 	destPtr := uintptr(unsafe.Pointer(dests))
 	for i := 0; i < goDestCount; i++ {
+
 		// is this ok?
 		dest := (*C.cups_dest_t)(unsafe.Pointer(destPtr))
 		d := &Dest{

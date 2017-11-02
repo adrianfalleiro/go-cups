@@ -19,11 +19,12 @@ type Dest struct {
 }
 
 // PrintFile prints a file
-func (d *Dest) PrintFile(filename, mimeType string) int {
-	// check mime type
-	// check file
-	return 0
-}
+// TODO: Complete implementation
+// func (d *Dest) PrintFile(filename, mimeType string) int {
+// 	// check mime type
+// 	// check file
+// 	return 0
+// }
 
 // Status returns the status of the dest
 func (d *Dest) Status() string {
@@ -56,10 +57,11 @@ func (d *Dest) Status() string {
 }
 
 // GetOption returns the options
-func (d *Dest) GetOption(keyName string) string {
-	// Return option
-	return ""
-}
+// TODO: Complete implementation
+// func (d *Dest) GetOption(keyName string) string {
+// 	// Return option
+// 	return ""
+// }
 
 // GetOptions returns a map of the dest options
 func (d *Dest) GetOptions() map[string]string {
@@ -75,6 +77,7 @@ func (d *Dest) TestPrint() int {
 	var jobID C.int
 
 	// resolve path/to/test/file
+	// TODO: find the location of this file on linux/bsd/osx
 	osxTest := "/usr/share/cups/data/testprint"
 
 	// Print a single file
