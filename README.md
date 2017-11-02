@@ -27,7 +27,6 @@ import (
 
 func main() {
     printers := cups.NewDefaultConnection()
-    printers.Refresh()
     for _, dest := range printers.Dests {
         fmt.Printf("%v (%v)\n", dest.Name, dest.Status())
     }
